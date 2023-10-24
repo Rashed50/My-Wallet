@@ -26,5 +26,15 @@
         android:id="@+id/navigation_settings"
         android:name="com.shamim.expensetracker.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_navigation_settings_to_incomeCategoryFragment"
+            app:destination="@id/incomeCategoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/incomeCategoryFragment"
+        android:name="com.shamim.expensetracker.ui.income.IncomeCategoryFragment"
+        android:label="Add Income Category"
+        tools:layout="@layout/fragment_income_category" >
+    </fragment>
 </navigation>

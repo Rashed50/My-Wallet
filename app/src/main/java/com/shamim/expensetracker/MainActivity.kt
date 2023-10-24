@@ -1,12 +1,15 @@
 package com.shamim.expensetracker
 
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.shamim.expensetracker.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,7 +34,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications,R.id.navigation_settings
             )
         )
+        val navBar: BottomNavigationView = findViewById(R.id.nav_view)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if (destination.id == R.id.incomeCategoryFragment) {
+                navBar.visibility = View.GONE
+            } else {
+                navBar.visibility = View.VISIBLE
+            }
+        }
     }
 }

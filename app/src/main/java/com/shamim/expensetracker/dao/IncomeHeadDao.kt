@@ -13,6 +13,7 @@ import com.shamim.expensetracker.model.IncomeHead
 interface IncomeHeadDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertIncomeHead(incomeHead: IncomeHead)
+
     @Query("SELECT * FROM ${TableName.INCOME_HEAD_ENTITY}")
     fun getIncomeHeadList(): List<IncomeHead>
 
