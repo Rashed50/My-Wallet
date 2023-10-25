@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.shamim.expensetracker.R
-import com.shamim.expensetracker.databinding.FragmentReportBinding
 import com.shamim.expensetracker.databinding.FragmentSettingsBinding
 
 
@@ -20,7 +18,10 @@ class SettingsFragment : Fragment() {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         binding.incomeBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_settings_to_incomeCategoryFragment)
+            findNavController().navigate(R.id.settings_to_incomeCategoryFragment)
+        }
+        binding.expenseBtn.setOnClickListener {
+            findNavController().navigate(R.id.settings_to_expenseCategoryFragment)
         }
         return binding.root
     }

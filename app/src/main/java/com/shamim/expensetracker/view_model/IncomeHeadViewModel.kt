@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -27,7 +26,7 @@ class IncomeHeadViewModel @Inject constructor(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun getAddressesLiveData(): LiveData<List<IncomeHead>> {
+    fun getIncomeLiveData(): LiveData<List<IncomeHead>> {
         IncomeHeadData.value = listOf()
         GlobalScope.launch {
            // delay(1000)
@@ -44,7 +43,7 @@ class IncomeHeadViewModel @Inject constructor(
       }
     }
 
-    fun deleteUser(incomeHead: IncomeHead) {
+    fun deleteIncomeHead(incomeHead: IncomeHead) {
         incomeHeadRepository.deleteIncomeHead(incomeHead)
     }
 }

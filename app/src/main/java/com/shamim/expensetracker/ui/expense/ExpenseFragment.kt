@@ -14,25 +14,18 @@ class ExpenseFragment : Fragment() {
 
     private var _binding: FragmentExpenseBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val expenseViewModel = ViewModelProvider(this)[ExpenseViewModel::class.java]
 
         _binding = FragmentExpenseBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        expenseViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+
+
+        return _binding!!.root
     }
 
     override fun onDestroyView() {

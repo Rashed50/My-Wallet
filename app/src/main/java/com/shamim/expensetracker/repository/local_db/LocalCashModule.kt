@@ -2,6 +2,7 @@ package com.shamim.expensetracker.repository.local_db
 
 import android.content.Context
 import androidx.room.Room
+import com.shamim.expensetracker.dao.ExpenseHeadDao
 import com.shamim.expensetracker.dao.IncomeHeadDao
 import dagger.Module
 import dagger.Provides
@@ -39,6 +40,11 @@ object LocalCashModule {
         return database.getIncomeHeadDao()
     }
 
+    @Provides
+    @Singleton
+    fun provideExpenseHeadDao(database: MainDatabase): ExpenseHeadDao {
+        return database.getExpenseHeadDao()
+    }
 
 
 }

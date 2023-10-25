@@ -41,7 +41,11 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.incomeCategoryFragment) {
                 navBar.visibility = View.GONE
-            } else {
+            }
+            if (destination.id == R.id.expenseCategoryFragment) {
+                navBar.visibility = View.GONE
+            }
+            else {
                 navBar.visibility = View.VISIBLE
             }
         }
