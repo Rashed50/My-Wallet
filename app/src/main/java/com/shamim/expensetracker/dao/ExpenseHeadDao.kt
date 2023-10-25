@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.shamim.expensetracker.model.ExpenseHead
-import com.shamim.expensetracker.repository.local_db.TableName
+import com.shamim.expensetracker.local_db.TableName
 
 
 @Dao

@@ -1,4 +1,4 @@
-package com.shamim.expensetracker.repository.local_db
+package com.shamim.expensetracker.local_db
 
 object TableName {
     const val INCOME_HEAD_ENTITY = "income_head"
