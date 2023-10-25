@@ -7,6 +7,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.internal.ContextUtils.getActivity
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var appBarConfiguration: AppBarConfiguration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,18 +37,29 @@ class MainActivity : AppCompatActivity() {
         )
         val navBar: BottomNavigationView = findViewById(R.id.nav_view)
 
+        this.appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.incomeCategoryFragment) {
-                navBar.visibility = View.GONE
-            }
-            if (destination.id == R.id.expenseCategoryFragment) {
-                navBar.visibility = View.GONE
-            }
-            else {
-                navBar.visibility = View.VISIBLE
+            when (destination.id) {
+                R.id.incomeCategoryFragment -> {
+                    navBar.visibility = View.GONE
+                }
+                R.id.expenseCategoryFragment -> {
+                    navBar.visibility = View.GONE
+                }
+                else -> {
+                    navBar.visibility = View.VISIBLE
+                }
             }
         }
+
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 }
