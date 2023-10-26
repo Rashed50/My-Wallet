@@ -3,22 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_income">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_income"
         android:name="com.shamim.expensetracker.ui.income.IncomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_income" />
+        tools:layout="@layout/fragment_income" >
+        <action
+            android:id="@+id/income_to_addIncomeFragment"
+            app:destination="@id/addIncomeFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_expense"
         android:name="com.shamim.expensetracker.ui.expense.ExpenseFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_expense" />
+        tools:layout="@layout/fragment_expense" >
+        <action
+            android:id="@+id/expense_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_report"
         android:name="com.shamim.expensetracker.ui.report.ReportFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_report" />
@@ -45,4 +53,14 @@
         android:name="com.shamim.expensetracker.ui.expense.ExpenseCategoryFragment"
         android:label="Add Expense Category"
         tools:layout="@layout/fragment_expense_category" />
+    <fragment
+        android:id="@+id/addIncomeFragment"
+        android:name="com.shamim.expensetracker.ui.income.AddIncomeFragment"
+        android:label="Add New Income"
+        tools:layout="@layout/fragment_add_income" />
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.shamim.expensetracker.ui.expense.AddExpenseFragment"
+        android:label="Add New Expense"
+        tools:layout="@layout/fragment_add_expense" />
 </navigation>

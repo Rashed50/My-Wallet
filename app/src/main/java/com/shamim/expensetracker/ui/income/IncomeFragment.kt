@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.shamim.expensetracker.R
 import com.shamim.expensetracker.databinding.FragmentIncomeBinding
 import com.shamim.expensetracker.model.IncomeHead
 import com.shamim.expensetracker.view_model.IncomeHeadViewModel
@@ -29,6 +31,10 @@ class IncomeFragment : Fragment() {
         incomeHeadViewModel = ViewModelProvider(this)[IncomeHeadViewModel::class.java]
 
         _binding = FragmentIncomeBinding.inflate(inflater, container, false)
+
+        _binding!!.addBtn.setOnClickListener {
+            findNavController().navigate(R.id.income_to_addIncomeFragment)
+        }
 
         return _binding!!.root
     }
