@@ -34,7 +34,7 @@ class ExpenseRecordViewModel @Inject constructor(
         return ExpenseRecordData
     }
 
-    suspend fun insertExpenseHead(expenseRecord: ExpenseRecord) {
+    suspend fun insertExpenseRecord(expenseRecord: ExpenseRecord) {
         withContext(Dispatchers.IO) {
             expenseRecordRepository.insertExpenseRecord(expenseRecord)
         }

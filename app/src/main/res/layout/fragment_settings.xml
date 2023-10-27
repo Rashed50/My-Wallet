@@ -44,9 +44,11 @@
                     android:textColor="@color/black"
                     android:text="Total Income"/>
                 <TextView
+                    android:id="@+id/totalIncome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1244454000"/>
+                    android:textColor="#388E3C"
+                    android:text="0"/>
 
             </LinearLayout>
 
@@ -68,9 +70,11 @@
                     android:textColor="@color/black"
                     android:text="Total Expense"/>
                 <TextView
+                    android:id="@+id/totalExpense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1254000"/>
+                    android:textColor="#D32F2F"
+                    android:text="0"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -99,14 +103,14 @@
                 android:id="@+id/incomeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Income Category"
+                android:text="Add Income Category"
                 android:textAllCaps="false" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/expenseBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Expense Category"
+                android:text="Add Expense Category"
                 android:textAllCaps="false" />
         </LinearLayout>
 

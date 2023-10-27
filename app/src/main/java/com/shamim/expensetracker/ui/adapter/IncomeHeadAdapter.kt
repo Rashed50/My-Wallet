@@ -1,4 +1,4 @@
-package com.shamim.expensetracker.ui.income.adapter
+package com.shamim.expensetracker.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View 
@@ -7,17 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView 
 import androidx.recyclerview.widget.RecyclerView
 import com.shamim.expensetracker.R
-import com.shamim.expensetracker.model.ExpenseHead
 import com.shamim.expensetracker.model.IncomeHead
 
-class ExpenseHeadAdapter(private val mList: List<ExpenseHead>) : RecyclerView.Adapter<ExpenseHeadAdapter.ViewHolder>() {
+class IncomeHeadAdapter(private val mList: List<IncomeHead>) : RecyclerView.Adapter<IncomeHeadAdapter.ViewHolder>() {
 
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { 
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
 		val view = LayoutInflater.from(parent.context) 
 			.inflate(R.layout.income_head_item, parent, false)
 
-		return ViewHolder(view) 
+		return ViewHolder(view)
 	}
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val incomeHead = mList[position]

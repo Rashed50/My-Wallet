@@ -9,6 +9,7 @@ data class ExpenseRecord(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = 0,
     val expenseCategoryID: Int? = null,
+    val categoryName: String? = null,
     val amount: String? = null,
     val remark: String? = null,
     val dateTime: String? = null,

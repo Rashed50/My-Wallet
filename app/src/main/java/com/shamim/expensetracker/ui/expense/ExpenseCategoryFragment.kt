@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.shamim.expensetracker.R
 import com.shamim.expensetracker.databinding.FragmentExpenseCategoryBinding
 import com.shamim.expensetracker.model.ExpenseHead
-import com.shamim.expensetracker.ui.income.adapter.ExpenseHeadAdapter
+import com.shamim.expensetracker.ui.adapter.ExpenseHeadAdapter
 import com.shamim.expensetracker.view_model.ExpenseHeadViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

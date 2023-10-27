@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.shamim.expensetracker.R
 import com.shamim.expensetracker.databinding.FragmentIncomeCategoryBinding
 import com.shamim.expensetracker.model.IncomeHead
-import com.shamim.expensetracker.ui.income.adapter.IncomeHeadAdapter
+import com.shamim.expensetracker.ui.adapter.IncomeHeadAdapter
 import com.shamim.expensetracker.view_model.IncomeHeadViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -76,25 +76,11 @@ class IncomeCategoryFragment : Fragment() {
 
     private fun dataShow() {
         val data = ArrayList<IncomeHead>()
-//        lifecycleScope.launch {
-//            val data = ArrayList<IncomeHead>()
-//            incomeHeadViewModel.getAllIncomeHead().forEach {income->
-//                data.add(income)
-//                Log.d("data",income.toString())
-//            }
-//            val adapter = IncomeHeadAdapter(data)
-//            binding.recyclerview.adapter = adapter
-//            Log.d("data",data.toString())
-//
-//        }
-
         incomeHeadViewModel.getIncomeLiveData().observe(viewLifecycleOwner) { incomeData ->
             data.addAll(incomeData)
             val adapter = IncomeHeadAdapter(data)
             binding.recyclerview.adapter = adapter
             Log.d("data", data.toString())
         }
-
-
     }
 }
