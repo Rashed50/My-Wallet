@@ -10,8 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.shamim.expensetracker.databinding.FragmentReportBinding
 import com.shamim.expensetracker.helper.DateTime
+import com.shamim.expensetracker.model.ReportModel
+import com.shamim.expensetracker.model.income_record.IncomeRecord
+import com.shamim.expensetracker.ui.adapter.ReportAdapter
 import com.shamim.expensetracker.view_model.ExpenseRecordViewModel
 import com.shamim.expensetracker.view_model.IncomeRecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +47,30 @@ class ReportFragment : Fragment() {
 
         dataShow()
         inTotalDataShow()
+        showReportByMonth()
         return _binding!!.root
+    }
+
+    private fun showReportByMonth() {
+        _binding!!.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val data = listOf<String>(
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        )
+
+        val adapter = ReportAdapter(data)
+
+        _binding!!.recyclerView.adapter = adapter
     }
 
 
