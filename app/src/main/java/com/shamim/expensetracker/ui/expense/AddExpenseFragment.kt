@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.shamim.expensetracker.databinding.FragmentAddExpenseBinding
+import com.shamim.expensetracker.helper.DateTime
 import com.shamim.expensetracker.model.expense_record.ExpenseRecord
 import com.shamim.expensetracker.view_model.ExpenseHeadViewModel
 import com.shamim.expensetracker.view_model.ExpenseRecordViewModel
@@ -19,6 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -38,25 +40,25 @@ class AddExpenseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentAddExpenseBinding.inflate(inflater,container,false)
+        binding = FragmentAddExpenseBinding.inflate(inflater, container, false)
 
         expenseRecordViewModel = ViewModelProvider(this)[ExpenseRecordViewModel::class.java]
         expenseHeadViewModel = ViewModelProvider(this)[ExpenseHeadViewModel::class.java]
 
-        val dataList = listOf<String>("Test 1","Test 2","Test 3","Test 4",)
+        val dataList = listOf<String>("Test 1", "Test 2", "Test 3", "Test 4")
 
         expenseHeadViewModel.getExpenseLiveData()
             .observe(viewLifecycleOwner) { incomeRecords ->
                 incomeRecords?.forEach { incomeHead ->
-                   expenseCategoryName.addAll(listOf(incomeHead.incomeHead!!))
-                   expenseCategoryId.addAll(listOf(incomeHead.id!!))
+                    expenseCategoryName.addAll(listOf(incomeHead.incomeHead!!))
+                    expenseCategoryId.addAll(listOf(incomeHead.id!!))
                 }
                 binding.spnMySpinner.setItems(expenseCategoryName.toTypedArray())
             }
 
         binding.spnMySpinner.setItems(dataList.toTypedArray())
 
-        binding.spnMySpinner.setOnItemClickListener{position->
+        binding.spnMySpinner.setOnItemClickListener { position ->
             categoryId = expenseCategoryId[position]
         }
         binding.date.setOnClickListener {
@@ -69,39 +71,42 @@ class AddExpenseFragment : Fragment() {
         return binding.root
     }
 
-    private fun addData(){
+    private fun addData() {
         val name = binding.spnMySpinner.text.toString()
         val amount = binding.amount.text.toString()
         val remark = binding.remark.text.toString()
 
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             massage("Please Select Category")
-        }
-        else if (amount.isEmpty()){
+        } else if (amount.isEmpty()) {
             massage("Please Enter Amount")
-        }
-        else if (date.isEmpty()){
+        } else if (date.isEmpty()) {
             massage("Please Select Date")
-        }
-        else{
-            val record = ExpenseRecord(null,categoryId,name,amount,remark,date)
+        } else {
+
+            val record = ExpenseRecord(
+                null, categoryId, name, amount, remark, date,
+                DateTime.getMonth(),
+                DateTime.getYear()
+            )
             lifecycleScope.launch {
                 expenseRecordViewModel.insertExpenseRecord(record)
-                Toast.makeText(requireContext(), "Data Save Successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Data Save Successfully", Toast.LENGTH_SHORT)
+                    .show()
                 delay(1000)
                 findNavController().popBackStack()
             }
         }
     }
 
-    private fun  massage(massage:String) {
+    private fun massage(massage: String) {
         Toast.makeText(requireContext(), massage, Toast.LENGTH_SHORT).show()
     }
 
     private fun showDatePicker() {
         // Create a DatePickerDialog
         val datePickerDialog = DatePickerDialog(
-            requireContext(), {DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+            requireContext(), { DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 // Create a new Calendar instance to hold the selected date
                 val selectedDate = Calendar.getInstance()
                 // Set the selected date using the values received from the DatePicker dialog
@@ -121,4 +126,8 @@ class AddExpenseFragment : Fragment() {
         // Show the DatePicker dialog
         datePickerDialog.show()
     }
+}
+
+fun now(): String {
+    return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
 }

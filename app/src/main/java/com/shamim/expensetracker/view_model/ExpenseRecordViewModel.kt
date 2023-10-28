@@ -23,10 +23,10 @@ class ExpenseRecordViewModel @Inject constructor(
 
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun getExpenseRecordLiveData(): LiveData<List<ExpenseRecord>> {
+    fun getExpenseRecordLiveData(month: String, year: String): LiveData<List<ExpenseRecord>> {
         ExpenseRecordData.value = listOf()
         GlobalScope.launch {
-            val expenseRecordList = expenseRecordRepository.getAllExpenseRecord()
+            val expenseRecordList = expenseRecordRepository.getAllExpenseRecord(month, year)
             withContext(Dispatchers.Main) {
                 ExpenseRecordData.postValue(expenseRecordList)
             }
@@ -40,6 +40,11 @@ class ExpenseRecordViewModel @Inject constructor(
         }
     }
 
+    suspend fun deleteItem(id:Int){
+        withContext(Dispatchers.IO) {
+            expenseRecordRepository.deleteExpenseRecord(id)
+        }
+    }
     fun deleteExpense(expenseRecord: ExpenseRecord) {
         expenseRecordRepository.deleteExpenseRecord(expenseRecord)
     }

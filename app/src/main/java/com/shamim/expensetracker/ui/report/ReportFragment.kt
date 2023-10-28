@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.shamim.expensetracker.databinding.FragmentReportBinding
+import com.shamim.expensetracker.helper.DateTime
 import com.shamim.expensetracker.view_model.ExpenseRecordViewModel
 import com.shamim.expensetracker.view_model.IncomeRecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +52,7 @@ class ReportFragment : Fragment() {
     private fun dataShow() {
         pieChart = _binding!!.piechart
 
-        incomeRecordViewModel.getIncomeRecordLiveData()
+        incomeRecordViewModel.getIncomeRecordLiveData(DateTime.getMonth(), DateTime.getYear())
             .observe(viewLifecycleOwner) { incomeRecords ->
 
                 if (incomeRecords != null) {
@@ -71,7 +72,7 @@ class ReportFragment : Fragment() {
                 }
             }
 
-        expenseRecordViewModel.getExpenseRecordLiveData()
+        expenseRecordViewModel.getExpenseRecordLiveData(DateTime.getMonth(),DateTime.getYear())
             .observe(viewLifecycleOwner) { expenseRecords ->
 
                 if (expenseRecords != null) {

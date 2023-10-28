@@ -10,8 +10,8 @@ class IncomeRecordRepository @Inject constructor(
     private val incomeRecordDao: IncomeRecordDao
 ) {
 
-    fun getAllIncomeRecord(): List<IncomeRecord> {
-        return incomeRecordDao.getIncomeRecordList()
+    fun getAllIncomeRecord(month: String, year: String ): List<IncomeRecord> {
+        return incomeRecordDao.getIncomeRecordList(month,year)
     }
 
     fun insertIncomeRecord(incomeRecord: IncomeRecord) {
@@ -21,6 +21,10 @@ class IncomeRecordRepository @Inject constructor(
     fun deleteIncomeRecord(incomeRecord: IncomeRecord) {
         incomeRecordDao.delete(incomeRecord)
     }
+    fun deleteIncomeRecord(id:Int) {
+        incomeRecordDao.deleteIncomeRecord(id)
+    }
+
     fun deleteAllIncomeRecord() {
         incomeRecordDao.deleteIncomeRecordList()
     }

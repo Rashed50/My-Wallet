@@ -13,4 +13,6 @@ data class ExpenseRecord(
     val amount: String? = null,
     val remark: String? = null,
     val dateTime: String? = null,
+    val month: String? = null,
+    val year: String? = null,
 )

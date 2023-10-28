@@ -15,11 +15,14 @@ interface IncomeRecordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertIncomeRecord(incomeRecord: IncomeRecord)
 
-    @Query("SELECT * FROM ${TableName.INCOME_RECORD}")
-    fun getIncomeRecordList(): List<IncomeRecord>
+    @Query("SELECT * FROM ${TableName.INCOME_RECORD}  WHERE month =:month AND year =:year ")
+    fun getIncomeRecordList(month:String,year:String): List<IncomeRecord>
 
     @Delete
     fun delete(incomeRecord: IncomeRecord)
     @Query("DELETE FROM ${TableName.INCOME_RECORD}")
     fun deleteIncomeRecordList()
+
+    @Query("DELETE FROM ${TableName.INCOME_RECORD} WHERE id =:id")
+    fun deleteIncomeRecord(id:Int)
 }

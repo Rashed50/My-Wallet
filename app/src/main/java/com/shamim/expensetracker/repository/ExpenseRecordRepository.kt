@@ -10,8 +10,8 @@ class ExpenseRecordRepository @Inject constructor(
     private val expenseRecordDao: ExpenseRecordDao
 ) {
 
-    fun getAllExpenseRecord(): List<ExpenseRecord> {
-        return expenseRecordDao.getExpenseRecordList()
+    fun getAllExpenseRecord(month: String, year: String): List<ExpenseRecord> {
+        return expenseRecordDao.getExpenseRecordList(month,year)
     }
 
     fun insertExpenseRecord(expenseRecord: ExpenseRecord) {
@@ -21,7 +21,10 @@ class ExpenseRecordRepository @Inject constructor(
     fun deleteExpenseRecord(expenseRecord: ExpenseRecord) {
         expenseRecordDao.delete(expenseRecord)
     }
-    fun deleteAllExpenseRecord() {
+    fun deleteExpenseRecord(id:Int) {
+        expenseRecordDao.deleteExpenseRecord(id)
+    }
+    fun deleteAllExpenseRecordList() {
         expenseRecordDao.deleteExpenseRecordList()
     }
 }

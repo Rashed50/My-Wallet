@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.shamim.expensetracker.R
 import com.shamim.expensetracker.databinding.FragmentAddIncomeBinding
+import com.shamim.expensetracker.helper.DateTime
 import com.shamim.expensetracker.model.income_record.IncomeRecord
 import com.shamim.expensetracker.ui.adapter.IncomeRecordAdapter
 import com.shamim.expensetracker.view_model.IncomeHeadViewModel
@@ -21,7 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -47,8 +50,6 @@ class AddIncomeFragment : Fragment() {
 
         incomeRecordViewModel = ViewModelProvider(this)[IncomeRecordViewModel::class.java]
         incomeHeadViewModel = ViewModelProvider(this)[IncomeHeadViewModel::class.java]
-
-        val dataList = listOf<String>("Test 1","Test 2","Test 3","Test 4",)
 
 
         incomeHeadViewModel.getIncomeLiveData()
@@ -89,7 +90,9 @@ class AddIncomeFragment : Fragment() {
             massage("Please Select Date")
         }
         else{
-            val incomeRecord = IncomeRecord(null,categoryId,name,amount,remark,date)
+
+            val incomeRecord = IncomeRecord(null,categoryId,name,amount,remark,date, DateTime.getMonth(),DateTime.getYear())
+
             lifecycleScope.launch {
                 incomeRecordViewModel.insertIncomeRecord(incomeRecord)
                 Toast.makeText(requireContext(), "Data Save Successfully", Toast.LENGTH_SHORT).show()
@@ -101,7 +104,7 @@ class AddIncomeFragment : Fragment() {
     private fun showDatePicker() {
         // Create a DatePickerDialog
         val datePickerDialog = DatePickerDialog(
-            requireContext(), {DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+            requireContext(), { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 // Create a new Calendar instance to hold the selected date
                 val selectedDate = Calendar.getInstance()
                 // Set the selected date using the values received from the DatePicker dialog
@@ -126,3 +129,4 @@ class AddIncomeFragment : Fragment() {
         Toast.makeText(requireContext(), massage, Toast.LENGTH_SHORT).show()
     }
 }
+

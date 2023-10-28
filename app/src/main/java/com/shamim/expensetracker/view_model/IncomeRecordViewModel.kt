@@ -23,11 +23,11 @@ class IncomeRecordViewModel @Inject constructor(
     object IncomeRecordData: MutableLiveData<List<IncomeRecord>>()
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun getIncomeRecordLiveData(): LiveData<List<IncomeRecord>> {
+    fun getIncomeRecordLiveData(month: String, year: String): LiveData<List<IncomeRecord>> {
         IncomeRecordData.value = listOf()
         GlobalScope.launch {
            // delay(1000)
-            val incomeRecordList = incomeRecordRepository.getAllIncomeRecord()
+            val incomeRecordList = incomeRecordRepository.getAllIncomeRecord(month, year)
             withContext(Dispatchers.Main) {
                 IncomeRecordData.postValue(incomeRecordList)
             }
@@ -38,6 +38,12 @@ class IncomeRecordViewModel @Inject constructor(
       withContext(Dispatchers.IO){
          incomeRecordRepository.insertIncomeRecord(incomeRecord)
       }
+    }
+
+    suspend fun deleteItem(id:Int){
+        withContext(Dispatchers.IO){
+            incomeRecordRepository.deleteIncomeRecord(id)
+        }
     }
 
     fun deleteIncomeHead(incomeRecord: IncomeRecord) {

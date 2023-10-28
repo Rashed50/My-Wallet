@@ -16,11 +16,14 @@ interface ExpenseRecordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertExpenseRecord(expenseRecord: ExpenseRecord)
 
-    @Query("SELECT * FROM ${TableName.EXPENSE_RECORD}")
-    fun getExpenseRecordList(): List<ExpenseRecord>
+    @Query("SELECT * FROM ${TableName.EXPENSE_RECORD}  WHERE month =:month AND year =:year")
+    fun getExpenseRecordList(month:String,year:String): List<ExpenseRecord>
 
     @Delete
     fun delete(expenseRecord: ExpenseRecord)
     @Query("DELETE FROM ${TableName.EXPENSE_RECORD}")
     fun deleteExpenseRecordList()
+
+    @Query("DELETE FROM ${TableName.INCOME_RECORD} WHERE id =:id")
+    fun deleteExpenseRecord(id:Int)
 }
