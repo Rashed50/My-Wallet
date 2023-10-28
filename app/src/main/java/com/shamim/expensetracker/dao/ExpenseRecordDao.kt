@@ -24,6 +24,6 @@ interface ExpenseRecordDao {
     @Query("DELETE FROM ${TableName.EXPENSE_RECORD}")
     fun deleteExpenseRecordList()
 
-    @Query("DELETE FROM ${TableName.INCOME_RECORD} WHERE id =:id")
+    @Query("DELETE FROM ${TableName.EXPENSE_RECORD} WHERE id =:id")
     fun deleteExpenseRecord(id:Int)
 }
