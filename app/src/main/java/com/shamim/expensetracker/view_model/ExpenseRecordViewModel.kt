@@ -20,7 +20,14 @@ class ExpenseRecordViewModel @Inject constructor(
 
 
     object ExpenseRecordData : MutableLiveData<List<ExpenseRecord>>()
+    object PreviousMonthData : MutableLiveData<List<ExpenseRecord>>()
 
+    private val _mutableLiveData: MutableLiveData<Int> =MutableLiveData<Int>()
+    var data: LiveData<Int> = _mutableLiveData
+
+    fun  setData(data:Int){
+        _mutableLiveData.value = data
+    }
 
     @OptIn(DelicateCoroutinesApi::class)
     fun getExpenseRecordLiveData(month: String, year: String): LiveData<List<ExpenseRecord>> {
@@ -32,6 +39,18 @@ class ExpenseRecordViewModel @Inject constructor(
             }
         }
         return ExpenseRecordData
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun getPreviousMonthLiveData(month: String, year: String): LiveData<List<ExpenseRecord>> {
+        PreviousMonthData.value = listOf()
+        GlobalScope.launch {
+            val expenseRecordList = expenseRecordRepository.getAllExpenseRecord(month, year)
+            withContext(Dispatchers.Main) {
+                PreviousMonthData.postValue(expenseRecordList)
+            }
+        }
+        return PreviousMonthData
     }
 
     suspend fun insertExpenseRecord(expenseRecord: ExpenseRecord) {

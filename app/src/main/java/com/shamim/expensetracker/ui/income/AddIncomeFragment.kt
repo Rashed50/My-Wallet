@@ -102,18 +102,12 @@ class AddIncomeFragment : Fragment() {
         }
     }
     private fun showDatePicker() {
-        // Create a DatePickerDialog
         val datePickerDialog = DatePickerDialog(
             requireContext(), { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-                // Create a new Calendar instance to hold the selected date
                 val selectedDate = Calendar.getInstance()
-                // Set the selected date using the values received from the DatePicker dialog
                 selectedDate.set(year, monthOfYear, dayOfMonth)
-                // Create a SimpleDateFormat to format the date as "dd/MM/yyyy"
                 val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                // Format the selected date into a string
                 val formattedDate = dateFormat.format(selectedDate.time)
-                // Update the TextView to display the selected date with the "Selected Date: " prefix
                 binding.date.setText(formattedDate)
                 date = formattedDate
             },
@@ -121,7 +115,6 @@ class AddIncomeFragment : Fragment() {
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
-        // Show the DatePicker dialog
         datePickerDialog.show()
     }
 

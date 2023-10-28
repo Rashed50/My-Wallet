@@ -38,6 +38,7 @@ class ExpenseFragment : Fragment(),DeleteExpenseRecord {
     private lateinit var expenseRecordViewModel: ExpenseRecordViewModel
     private var alertDialog: AlertDialog? = null
     private var totalAmount = 0
+    private var previousMonthData = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,7 +58,7 @@ class ExpenseFragment : Fragment(),DeleteExpenseRecord {
         _binding!!.recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
         dataShow()
-
+        previousMonthData()
         return _binding!!.root
     }
 
@@ -77,11 +78,28 @@ class ExpenseFragment : Fragment(),DeleteExpenseRecord {
                     _binding!!.recyclerview.adapter = adapter
                     Log.d("data", data.toString())
 
-                    _binding!!.tvTotalAmount.text = "Total Expense : $totalAmount"
+                    _binding!!.tvTotalAmount.text = "$totalAmount"
                 }
 
             }
 
+    }
+
+    private fun previousMonthData(){
+        val month = DateTime.getMonth().toInt() -1
+        expenseRecordViewModel.getPreviousMonthLiveData(month.toString(), DateTime.getYear())
+            .observe(viewLifecycleOwner) { incomeRecords ->
+
+                if (incomeRecords != null) {
+                    previousMonthData = 0
+                    incomeRecords.forEach { incomeRecord ->
+                        previousMonthData += incomeRecord.amount!!.toInt()
+                    }
+                    Log.d("previousMonthDate", previousMonthData.toString())
+
+                    _binding!!.previousMonth.text = "$previousMonthData"
+                }
+            }
     }
 
     override fun onDestroyView() {
@@ -104,11 +122,13 @@ class ExpenseFragment : Fragment(),DeleteExpenseRecord {
         }
         alertDialogBuilder.setNegativeButton(
             "Cancel"
-        ) { dialogInterface: DialogInterface, i: Int ->
+        ) { dialogInterface: DialogInterface, _: Int ->
             dialogInterface.cancel()
         }
 
         alertDialog = alertDialogBuilder.create()
         alertDialog?.show()
     }
+
+
 }

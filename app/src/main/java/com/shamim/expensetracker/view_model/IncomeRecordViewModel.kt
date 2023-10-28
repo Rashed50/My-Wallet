@@ -21,6 +21,14 @@ class IncomeRecordViewModel @Inject constructor(
 
 
     object IncomeRecordData: MutableLiveData<List<IncomeRecord>>()
+    object PreviousMonthData: MutableLiveData<List<IncomeRecord>>()
+
+    private val _mutableLiveData: MutableLiveData<Int> = MutableLiveData<Int>()
+    var data: LiveData<Int> = _mutableLiveData
+
+    fun  setData(data:Int){
+        _mutableLiveData.value = data
+    }
 
     @OptIn(DelicateCoroutinesApi::class)
     fun getIncomeRecordLiveData(month: String, year: String): LiveData<List<IncomeRecord>> {
@@ -33,6 +41,19 @@ class IncomeRecordViewModel @Inject constructor(
             }
         }
         return IncomeRecordData
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun getPreviousMonthLiveData(month: String, year: String): LiveData<List<IncomeRecord>> {
+        PreviousMonthData.value = listOf()
+        GlobalScope.launch {
+            // delay(1000)
+            val incomeRecordList = incomeRecordRepository.getAllIncomeRecord(month, year)
+            withContext(Dispatchers.Main) {
+                PreviousMonthData.postValue(incomeRecordList)
+            }
+        }
+        return PreviousMonthData
     }
     suspend fun insertIncomeRecord(incomeRecord: IncomeRecord) {
       withContext(Dispatchers.IO){

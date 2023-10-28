@@ -83,10 +83,10 @@ class AddExpenseFragment : Fragment() {
         } else if (date.isEmpty()) {
             massage("Please Select Date")
         } else {
-
+            val month = DateTime.getMonth().toInt() -1
             val record = ExpenseRecord(
                 null, categoryId, name, amount, remark, date,
-                DateTime.getMonth(),
+                month.toString(),
                 DateTime.getYear()
             )
             lifecycleScope.launch {

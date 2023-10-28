@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.shamim.expensetracker.databinding.FragmentReportBinding
 import com.shamim.expensetracker.helper.DateTime
@@ -25,7 +27,9 @@ class ReportFragment : Fragment() {
     private lateinit var expenseRecordViewModel: ExpenseRecordViewModel
     private var totalIncomeAmount = 0
     private var totalExpenseAmount = 0
-    var pieChart: PieChart? = null
+    private var pieChart: PieChart? = null
+
+    val currentDataX: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,10 +42,9 @@ class ReportFragment : Fragment() {
         expenseRecordViewModel = ViewModelProvider(this)[ExpenseRecordViewModel::class.java]
 
         dataShow()
-
+        inTotalDataShow()
         return _binding!!.root
     }
-
 
 
     override fun onDestroyView() {
@@ -61,6 +64,7 @@ class ReportFragment : Fragment() {
                         totalIncomeAmount += incomeRecord.amount!!.toInt()
 
                     }
+                    incomeRecordViewModel.setData(totalIncomeAmount)
                     pieChart!!.addPieSlice(
                         PieModel(
                             "Income", totalIncomeAmount.toFloat(),
@@ -69,18 +73,20 @@ class ReportFragment : Fragment() {
                     )
 
                     _binding!!.totalIncome.text = totalIncomeAmount.toString()
+
                 }
             }
 
-        expenseRecordViewModel.getExpenseRecordLiveData(DateTime.getMonth(),DateTime.getYear())
+        expenseRecordViewModel.getExpenseRecordLiveData(DateTime.getMonth(), DateTime.getYear())
             .observe(viewLifecycleOwner) { expenseRecords ->
 
                 if (expenseRecords != null) {
                     totalExpenseAmount = 0
-                    expenseRecords.forEach {incomeRecord ->
+                    expenseRecords.forEach { incomeRecord ->
                         totalExpenseAmount += incomeRecord.amount!!.toInt()
 
                     }
+                    expenseRecordViewModel.setData(totalExpenseAmount)
                     pieChart!!.addPieSlice(
                         PieModel(
                             "Expense", totalExpenseAmount.toFloat(),
@@ -89,9 +95,32 @@ class ReportFragment : Fragment() {
                     )
 
                     _binding!!.totalExpense.text = totalExpenseAmount.toString()
+
                 }
 
             }
+
         pieChart!!.startAnimation()
     }
+
+    private fun inTotalDataShow() {
+        var inTotal: Int
+        var x: Int
+        var y: Int
+        incomeRecordViewModel.data.observe(viewLifecycleOwner, Observer { it ->
+            x = it
+            _binding!!.incomeTv.text = "Total Income : $it"
+            expenseRecordViewModel.data.observe(viewLifecycleOwner, Observer {
+                y = it
+                inTotal = x - y
+                _binding!!.expenseTv.text = "Total Expense : $it"
+                _binding!!.inTotalTv.text = "Balance : $inTotal"
+
+            })
+
+        })
+
+
+    }
 }
+
