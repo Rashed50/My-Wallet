@@ -32,20 +32,23 @@ class ReportDetailsFragment : Fragment() {
     private lateinit var expenseRecordViewModel: ExpenseRecordViewModel
     private var totalAmount = 0
 
+    private var month = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
         binding = FragmentReportDetailsBinding.inflate(inflater, container, false)
-
+        filter()
         incomeRecordViewModel = ViewModelProvider(this)[IncomeRecordViewModel::class.java]
         expenseRecordViewModel = ViewModelProvider(this)[ExpenseRecordViewModel::class.java]
 
         binding.incomeRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         binding.expenseRecyclerview.layoutManager = LinearLayoutManager(requireContext())
 
-        when(this.arguments?.getString("data")){
+        month = this.arguments?.getString("data").toString()
+
+        when (this.arguments?.getString("data")) {
             "1" -> dataShow("01")
             "2" -> dataShow("02")
             "3" -> dataShow("03")
@@ -71,6 +74,7 @@ class ReportDetailsFragment : Fragment() {
         incomeRecordViewModel.getIncomeRecordLiveData(month, DateTime.getYear())
             .observe(viewLifecycleOwner) { incomeRecords ->
                 if (incomeRecords != null) {
+                    data.clear()
                     totalAmount = 0
                     incomeRecords.forEach { incomeRecord ->
                         totalAmount += incomeRecord.amount!!.toInt()
@@ -88,8 +92,8 @@ class ReportDetailsFragment : Fragment() {
         val expenseData = ArrayList<ExpenseRecord>()
         expenseRecordViewModel.getExpenseRecordLiveData(month, DateTime.getYear())
             .observe(viewLifecycleOwner) { expenseRecords ->
-
                 if (expenseRecords != null) {
+                    expenseData.clear()
                     totalAmount = 0
                     expenseRecords.forEach { incomeRecord ->
                         totalAmount += incomeRecord.amount!!.toInt()
@@ -124,7 +128,7 @@ class ReportDetailsFragment : Fragment() {
         })
     }
 
-    private  fun filter(){
+    private fun filter() {
         val data = listOf<String>(
             "January",
             "February",
@@ -139,15 +143,39 @@ class ReportDetailsFragment : Fragment() {
             "November",
             "December",
         )
-        val adapter = ArrayAdapter(requireContext(),
-            R.layout.spinner_item,R.id.tvName, data)
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item, R.id.tvName, data
+        )
         binding.spinner.adapter = adapter
+        var selection = "January"
+        when (month) {
+            "1" -> selection = "January"
+            "2" -> selection = "February"
+            "3" -> selection = "March"
+            "4" -> selection = "April"
+            "5" -> selection = "May"
+            "6" -> selection = "June"
+            "7" -> selection = "July"
+            "8" -> selection = "August"
+            "9" -> selection = "September"
+            "10" -> selection = "October"
+            "11" -> selection = "November"
+            "12" -> selection = "December"
+        }
+        val spinnerPosition: Int = adapter.getPosition(selection)
+        binding.spinner.setSelection(spinnerPosition)
 
         binding.spinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val month = position+1
-                when(month.toString()){
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                val month = position + 1
+                when (month.toString()) {
                     "1" -> dataShow("01")
                     "2" -> dataShow("02")
                     "3" -> dataShow("03")

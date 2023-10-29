@@ -1,5 +1,7 @@
 package com.shamim.expensetracker.ui.settings
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -37,6 +39,22 @@ class SettingsFragment : Fragment() {
         }
 
         dataShow()
+
+        binding.tvPrivacy.setOnClickListener {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://3iengineers.com/app.privary-policy?fbclid=IwAR0KA3k3YuWXmbA1EZKbEOHpFu-QieE5ubJOXmdIhW-PiT48kwgR28_a9mM")
+            )
+            startActivity(intent)
+        }
+
+//        binding.moreApps.setOnClickListener {
+//            val intent = Intent(
+//                Intent.ACTION_VIEW,
+//                Uri.parse("https://play.google.com/store/apps/developer?id=")
+//            )
+//            startActivity(intent)
+//        }
         return binding.root
     }
     private fun dataShow() {
