@@ -46,6 +46,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.expenseCategoryFragment -> {
                     navBar.visibility = View.GONE
                 }
+                R.id.reportDetailsFragment -> {
+                    navBar.visibility = View.GONE
+                }
                 else -> {
                     navBar.visibility = View.VISIBLE
                 }

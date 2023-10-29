@@ -29,7 +29,11 @@
         android:id="@+id/navigation_report"
         android:name="com.shamim.expensetracker.ui.report.ReportFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_report" />
+        tools:layout="@layout/fragment_report" >
+        <action
+            android:id="@+id/report_to_reportDetailsFragment"
+            app:destination="@id/reportDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.shamim.expensetracker.ui.settings.SettingsFragment"
@@ -63,4 +67,9 @@
         android:name="com.shamim.expensetracker.ui.expense.AddExpenseFragment"
         android:label="Add New Expense"
         tools:layout="@layout/fragment_add_expense" />
+    <fragment
+        android:id="@+id/reportDetailsFragment"
+        android:name="com.shamim.expensetracker.ui.report.ReportDetailsFragment"
+        android:label="Report Details"
+        tools:layout="@layout/fragment_report_details" />
 </navigation>

@@ -13,7 +13,7 @@ import com.shamim.expensetracker.model.ExpenseHead
 import com.shamim.expensetracker.model.IncomeHead
 import com.shamim.expensetracker.model.ReportModel
 
-class ReportAdapter(private val mList: List<String>) : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
+class ReportAdapter(private val mList: List<String>,private val reportItemClick: ReportItemClick) : RecyclerView.Adapter<ReportAdapter.ViewHolder>() {
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -26,7 +26,9 @@ class ReportAdapter(private val mList: List<String>) : RecyclerView.Adapter<Repo
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val reportModel = mList[position]
 		holder.textView.text = reportModel+" - "+DateTime.getYear()
-
+		holder.itemView.setOnClickListener {
+			reportItemClick.itemClick(position+1)
+		}
 	}
 	override fun getItemCount(): Int { 
 		return mList.size 
