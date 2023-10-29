@@ -106,7 +106,7 @@ class AddExpenseFragment : Fragment() {
     private fun showDatePicker() {
         // Create a DatePickerDialog
         val datePickerDialog = DatePickerDialog(
-            requireContext(), { DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+            requireContext(), { _, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 // Create a new Calendar instance to hold the selected date
                 val selectedDate = Calendar.getInstance()
                 // Set the selected date using the values received from the DatePicker dialog

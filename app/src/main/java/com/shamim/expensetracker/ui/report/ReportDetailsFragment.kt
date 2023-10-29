@@ -146,8 +146,8 @@ class ReportDetailsFragment : Fragment() {
         binding.spinner.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                val data = position+1
-                when(data.toString()){
+                val month = position+1
+                when(month.toString()){
                     "1" -> dataShow("01")
                     "2" -> dataShow("02")
                     "3" -> dataShow("03")

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ExpenseTracker</string>
+    <string name="app_name">My Wallet</string>
     <string name="title_home">Income</string>
     <string name="title_dashboard">Expense</string>
     <string name="title_notifications">Report</string>

@@ -92,7 +92,7 @@ class IncomeFragment : Fragment(), DeleteIncomeRecord {
         }
         alertDialogBuilder.setNegativeButton(
             "Cancel"
-        ) { dialogInterface: DialogInterface, i: Int ->
+        ) { dialogInterface: DialogInterface, _: Int ->
             dialogInterface.cancel()
         }
 
